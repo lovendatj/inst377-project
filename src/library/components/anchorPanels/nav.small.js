@@ -5,20 +5,20 @@ import { paths } from '../../utils/paths.js';
 import PageLogo from '../logos/page.logo.js';
 
 import style from '../../../styles/components/nav.module.css'
-import { colors } from '../../../styles/_colors.js';
+import { navbar } from '../../../styles/_colors.js';
 
 const NavSmall = () => {
     return (
         <div className={style.navSmall}>
             <div className={style.topNavBanner} style={{
-                background: colors.navbar.topBar.background,
-                color: colors.navbar.topBar.color,
+                background: navbar.topBar.background,
+                color: navbar.topBar.color,
             }}>
                 <h3>INST377 Final Project</h3>
             </div>
             <div className={style.bottomNavBanner} style={{
-                background: colors.navbar.bottomBar.background,
-                color: colors.navbar.bottomBar.color,
+                background: navbar.bottomBar.background,
+                color: navbar.bottomBar.color,
             }}>
                 <PageLogo />
                 <ul>
@@ -26,7 +26,7 @@ const NavSmall = () => {
                         return (
                             <li key={index}>
                                 <Link style={{
-                                    color: colors.navbar.bottomBar.color,
+                                    color: navbar.bottomBar.color,
                                 }} to={path.path}>{path.name}</Link>
                             </li>
                         );

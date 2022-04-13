@@ -1,0 +1,61 @@
+.footer {
+    display: inline-flex;
+    flex-direction: column;
+    margin-top: 50px;
+    width: 100%;
+    height: 200px;
+}
+
+.footerContent{
+    width: 100%;
+    height: 150px;
+
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footerContactBlock{
+    width: 300px;
+    height: 100%;
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+
+}
+.footerContactBlock p {
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+
+.footerLinksBlock{
+    width: 110%;
+}
+
+.footerLinksBlock ul{    
+    display: inline-flex;
+    align-items: right;
+    flex-direction: row;
+
+    list-style-type: none;
+
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.footerLinksBlock ul li {
+    padding-left: 10px;
+    width: auto;
+}
+.footerLinksBlock ul  li  a{
+    font-size: 0.8em;
+    margin: 0;
+    text-decoration: none;
+
+}
