@@ -1,0 +1,37 @@
+Dietary_restrictions
+-	Restriction_id
+-	Restriction_type
+Dining_hall
+-	Hall_id
+-	Hall_name
+-	Hall_address
+-	Hall_lat
+-	Hall_long
+Hall_Hours
+-	Hall_hours_id
+-	Day
+-	Schedule_id
+-	Hall_id
+Hall_schedule 
+-	Schedule_id
+-	Hours
+Macros
+-	Macro_id
+-	Calories
+-	Service_size
+-	Cholesterol
+-	Sodium
+-	Carbs
+-	Protein
+-	Meal_id
+-	Fat
+Meal_restrictions
+-	Meal_id
+-	Restriction_id
+Meals
+-	Meal_id
+-	Meal_name
+-	Meal_category
+Meals_location
+-	Hall_id
+-	Meal_id
