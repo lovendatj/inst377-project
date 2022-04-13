@@ -1,0 +1,44 @@
+.pageLogoContainer {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 100px;
+  width : 250px;
+}
+.pageLogoContainer img {
+  width: 50px;
+  height: auto;
+  border-radius: 50%;
+  padding-left: 10px;
+  filter: invert(1);
+}
+
+.pageLogoContainer h2{
+  font-size: 1.5em;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+@media screen and (max-width: 480px) {
+  .pageLogoContainer {
+    height: 100px;
+    width: auto;
+    flex-direction: row;
+    align-content: center;
+    padding-left: 15px;
+  }
+  .pageLogoContainer br {
+    display: none;
+  }
+  .pageLogoContainer img {
+    width: 50px;
+    height: auto;
+    border-radius: 50%;
+    padding-left: 10px;
+  }
+  .pageLogoContainer h2{
+    font-size: 1.3em;
+    font-weight: bold;
+    padding-left: 10px;
+  }
+}

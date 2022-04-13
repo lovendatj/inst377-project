@@ -1,11 +1,14 @@
 import PageLogo from "../logos/page.logo"
 
+
+import style from '../../../styles/components/nav.module.css'
+
 const Footer = () => {
 
     return (
         <footer className="footer">
             <div className="footer-content">
-                <PageLogo src="https://i.imgur.com/XqQZQZL.png" text="Campus Dining Hall" />
+                <PageLogo />
                 <div className="footer-contact-block">
                     <h3>Contact Us</h3>
                     <p>179 Not an Address, College Park, MD 20742-5035</p>

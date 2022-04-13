@@ -34,3 +34,58 @@ FROM
     JOIN meal_restrictions mr ON m.meal_id = mr.meal_id
     JOIN dietary_restrictions dr ON mr.restriction_id = dr.restriction_id;
 
+--------------------------------------------------------------------------------
+CREATE TABLE users (
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_name TEXT NOT NULL,
+    uuid TEXT NOT NULL,
+);
+
+CREATE TRIGGER user_hash_gen BEFORE INSERT ON users
+FOR EACH ROW
+BEGIN
+    SET NEW.uuid = SHA2(CONCAT(NEW.user_name, NEW.uuid), 256);
+END;
+
+
+--------------------------------------------------------------------------------
+CREATE FUNCTION validate_user_exist(user_name TEXT, uuid TEXT)
+RETURNS INTEGER
+BEGIN
+    IF EXISTS(SELECT * FROM users WHERE user_name = user_name AND uuid = uuid)
+    THEN
+        RETURN 1;
+    ELSE
+        RETURN 0;
+    END IF;
+END;
+
+CREATE TRIGGER hash_order BEFORE INSERT ON order_history
+FOR EACH ROW
+BEGIN
+    SET NEW.uuid = SHA2(CONCAT(NEW.user_name, NEW.uuid), 256);
+    IF validate_user_exist(NEW.user_name, NEW.uuid) = 0
+    THEN
+        RAISE(ABORT, 'Invalid user');
+    END IF;
+END;
+
+CREATE TABLE order_history (
+    order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_name TEXT NOT NULL,
+    uuid TEXT NOT NULL,
+    FOREIGN KEY (user_name, uuid) REFERENCES users(user_name, uuid)
+)
+CREATE TABLE order_history_macros (
+    order_info_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id INTEGER NOT NULL,
+    calories INTEGER NOT NULL,
+    service_size INTEGER NOT NULL,
+    cholesterol INTEGER NOT NULL,
+    sodium INTEGER NOT NULL,
+    carbs INTEGER NOT NULL,
+    protein INTEGER NOT NULL,
+    fat INTEGER NOT NULL,
+    quantity INTEGER NOT NULL
+    FOREIGN KEY (order_id) REFERENCES order_history(order_id),
+)

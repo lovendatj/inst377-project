@@ -35,9 +35,24 @@ Meals
 Meals_locations
 -	Hall_id
 -	Meal_id
-------------------
-Views
+----------------------
+-- Additional Tables
 
+Users
+-    User_id
+-    User_name
+-    uuid 
+-    hash: Hash(UUID+User_name)
+
+Order_History
+-    Order_id
+-    User_id
+-    Hash(User_name+UUID)
+-    Macros
+-    Dietary_restrictions
+-    Quantity
+----------------------
+-- Views
 vdh_info
 -   hall_id
 -   hall_name
