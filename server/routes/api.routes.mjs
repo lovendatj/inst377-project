@@ -13,7 +13,6 @@ apiRoutes.get('/', (req, res) => {
     });
 });
 
-apiRoutes.get('/test', withExample);
 
 apiRoutes.get('/hours', getDayDiningHallHours)
     .get('/hours/:day', getDayDiningHallHours);
