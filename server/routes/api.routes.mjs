@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+    getMenuAtHall,
     getDayDiningHallHours,
     withExample
 } from '../controller/database.controller.mjs';
@@ -16,6 +17,9 @@ apiRoutes.get('/test', withExample);
 
 apiRoutes.get('/hours', getDayDiningHallHours)
     .get('/hours/:day', getDayDiningHallHours);
+
+apiRoutes.get('/meals', getMenuAtHall)
+    .get('/meals/:hall_id', getMenuAtHall);
 // apiRoutes.get('/all', getAllTables)
 // apiRoutes.get('/all/:table', getAllTables)
 

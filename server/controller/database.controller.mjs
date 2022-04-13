@@ -30,7 +30,7 @@ const getAllTables = async (req, res, next) => {
 const withExample = async (req, res, next) => {
     try{
         let result = await query(
-            sql._dbversion
+            sql._withExample
             ,[]
         )
         res.status(200).json(result);
@@ -41,6 +41,47 @@ const withExample = async (req, res, next) => {
         });
     }
 }
+
+const getExplore = async (req, res, next) => {
+    try{
+        let result = await query(
+            sql._view_foodInformation
+            // "select * from vmeal_info"
+            // "drop view vmeal_info"
+            ,[]
+        )
+        res.status(200).json(result);
+    }
+    catch(err){
+        res.status(500).json({
+            error: err
+        });
+    }
+}
+
+const getMenuAtHall = async (req, res, next) => {
+    try{
+        if(req.params.hall_id !== undefined){
+            let result = await query(
+                sql.getMenuAtHall
+                ,[String(req.params.hall_id)] 
+            )
+            res.status(200).json(result);
+            return;
+        }
+        let result = await query(
+            sql.getAllMenu
+            ,[]
+        )
+        res.status(200).json(result);
+    }
+    catch(err){
+        res.status(500).json({
+            error: err
+        });
+    }
+}
+
 
 // Returns Hours of a Given Dining Hall for a Given Day
 // No day parameter returns all hours for all dining halls
@@ -73,6 +114,8 @@ const getDayDiningHallHours = async (req, res, next) => {
 // export modules
 export {
     getDayDiningHallHours,
+    getMenuAtHall,
     getAllTables,
+    getExplore,
     withExample
 };

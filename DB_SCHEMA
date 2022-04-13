@@ -32,6 +32,27 @@ Meals
 -	Meal_id
 -	Meal_name
 -	Meal_category
-Meals_location
+Meals_locations
 -	Hall_id
 -	Meal_id
+------------------
+Views
+
+vdh_info
+-   hall_id
+-   hall_name
+-   hall_address
+-   hall_lat
+-   hall_long
+-   hall_hours
+-   hall_day
+-   hall_hours_id
+
+
+vmeal_info
+-   meal_name
+-   meal_category
+-	Restriction_id
+-	Restriction_type
+-   *Macros
+-   hall_id
