@@ -6,5 +6,5 @@ export const paths = [
     {   
         path: '/order',
         name: 'Order',
-    }
+    },
 ];

@@ -41,7 +41,8 @@ Meals_locations
 Users
 -    User_id
 -    User_name
--    uuid 
+-    User_pass Hash(pass+salt)
+-    salt
 -    hash: Hash(UUID+User_name)
 
 Order_History

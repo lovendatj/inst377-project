@@ -13,9 +13,7 @@ const App = () => {
             background: standard.primary,
             color: standard.colorPrimary,
         }}>
-            < NavLarge 
-            
-            />
+            < NavLarge />
             < ImageDescriptionLarge />
             < Footer />
         </div>

@@ -7,6 +7,12 @@ import style from '../../../styles/components/nav.module.css'
 import { navbar } from '../../../styles/_colors.js';
 
 const NavLarge = () => {
+
+    const signOut = () => {
+        const user = localStorage.getItem('user');        
+        localStorage.removeItem('user');
+    }
+    
     return (
         <div className={style.navLarge}>
             <div className={style.topNavBanner} style={{
@@ -31,6 +37,16 @@ const NavLarge = () => {
                             </li>
                         );
                     })}
+                    <li>
+                        {
+                            localStorage.getItem('user') ?
+                                <button onClick={signOut}>Sign Out</button>
+                            :
+                            <Link style={{
+                                color: navbar.bottomBar.color,
+                            }} to="/signin">Sign In/Create Account</Link>
+                        }
+                    </li>
                 </ul>            
             </div>
             <div className={style.bottomNavImage} style={{

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
 import { paths } from '../../utils/paths.js';
 import PageLogo from '../logos/page.logo.js';
@@ -8,6 +8,17 @@ import style from '../../../styles/components/nav.module.css'
 import { navbar } from '../../../styles/_colors.js';
 
 const NavSmall = () => {
+
+    const [isSignIn, setIsSignIn] = React.useState(
+        localStorage.getItem('user') ? true : false
+    );
+    
+    const signOut = (e) => {
+        e.preventDefault();
+        localStorage.removeItem('user');
+        setIsSignIn(false);
+    }
+
     return (
         <div className={style.navSmall}>
             <div className={style.topNavBanner} style={{
@@ -31,6 +42,19 @@ const NavSmall = () => {
                             </li>
                         );
                     })}
+                    <li>
+                        
+                        {
+                            isSignIn ?
+                                <button onClick={
+                                    signOut
+                                }>Sign Out</button>
+                            :   
+                                <Link style={{
+                                    color: navbar.bottomBar.color,
+                                }} to="/signin">Sign In/Create Account</Link>
+                        }
+                    </li>
                 </ul>
             </div>
         </div>

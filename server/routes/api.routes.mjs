@@ -2,7 +2,9 @@ import express from 'express';
 import {
     getMenuAtHall,
     getDayDiningHallHours,
-    withExample
+    validateUser,
+    dropAll,
+    createNewUser
 } from '../controller/database.controller.mjs';
 
 const apiRoutes = express.Router();
@@ -19,6 +21,12 @@ apiRoutes.get('/hours', getDayDiningHallHours)
 
 apiRoutes.get('/meals', getMenuAtHall)
     .get('/meals/:hall_id', getMenuAtHall);
+
+apiRoutes.post('/signin', validateUser);
+apiRoutes.post('/signup', createNewUser, validateUser);
+
+apiRoutes.get('/dropall', dropAll);
+
 // apiRoutes.get('/all', getAllTables)
 // apiRoutes.get('/all/:table', getAllTables)
 

@@ -27,13 +27,21 @@ const getAllTables = async (req, res, next) => {
     }
 }
 
-const withExample = async (req, res, next) => {
+const validateUser = async (req, res, next) => {
     try{
         let result = await query(
-            sql._withExample
-            ,[]
+            sql.validateUser
+            ,[req.body.username, req.body.password]
         )
-        res.status(200).json(result);
+        if (result.length === 0){
+            res.status(401).json({
+                error: 'Invalid username or password'
+            });
+            return;
+        }
+        res.status(200).json({
+            user : {...result[0]}
+        });
     }
     catch(err){
         res.status(500).json({
@@ -42,17 +50,18 @@ const withExample = async (req, res, next) => {
     }
 }
 
-const getExplore = async (req, res, next) => {
+const createNewUser = async (req, res, next) => {
     try{
         let result = await query(
-            sql._view_foodInformation
-            // "select * from vmeal_info"
-            // "drop view vmeal_info"
-            ,[]
+            sql.createUser
+            ,[req.body.username, req.body.password]
         )
-        res.status(200).json(result);
+        res.status(200).json({
+            user : {...result[0]}
+        });
     }
     catch(err){
+        console.log(err)
         res.status(500).json({
             error: err
         });
@@ -81,6 +90,22 @@ const getMenuAtHall = async (req, res, next) => {
         });
     }
 }
+
+const dropAll = async (req, res, next) => {
+    try{
+        let result = await query(
+            sql._remove_users
+            ,[]
+        )
+        res.status(200).json(result);
+    }
+    catch(err){
+        res.status(500).json({
+            error: err
+        });
+    }
+}
+
 
 
 // Returns Hours of a Given Dining Hall for a Given Day
@@ -115,7 +140,8 @@ const getDayDiningHallHours = async (req, res, next) => {
 export {
     getDayDiningHallHours,
     getMenuAtHall,
+    validateUser,
+    createNewUser,
     getAllTables,
-    getExplore,
-    withExample
+    dropAll
 };

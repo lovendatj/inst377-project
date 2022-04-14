@@ -48,6 +48,57 @@ export const sql = {
                     hall_hours hh
                     JOIN hall_schedule hs ON hh.schedule_id = hs.schedule_id
             ) cte ON dh.hall_id = cte.hall_id;`,
+    _create_user:
+    `
+    CREATE TABLE users (
+        user_id INT NOT NULL AUTO_INCREMENT,
+        user_name VARCHAR(255) NOT NULL,
+        user_password TEXT NOT NULL,
+        salt TEXT NOT NULL,
+        token TEXT NOT NULL,
+        PRIMARY KEY (user_id)
+    );
+    `,
+    _create_salt_trigger:
+    `
+    CREATE TRIGGER user_salt_trigger BEFORE INSERT ON users
+    FOR EACH ROW
+    BEGIN
+        SET NEW.salt = UUID();
+        SET NEW.user_password = SHA2(CONCAT(NEW.salt, NEW.user_password), 256);
+        SET NEW.token = UUID();
+    END;
+    `,
+    _get_users:
+    `
+    SELECT * FROM users;`,
+    _remove_users:
+    `DELETE FROM users;
+    `,
+    validateUser:
+    `
+    SELECT 
+        user_id,
+        user_name,
+        token
+    FROM users 
+    WHERE 
+        user_name = ? AND 
+        user_password = (SHA2(CONCAT(salt, ?), 256));
+    `,
+    createUser: 
+    `
+    INSERT INTO users (user_name, user_password)
+    VALUES (?, ?);
+    `,
+    validateUserAction:
+    `
+    SELECT EXISTS(
+        SELECT 1
+        FROM users
+        WHERE user_name = ? AND token = ?
+    )
+    `,
     getAllFromTable:
     `SELECT * FROM ??;`,
     getDayDiningHallHours:

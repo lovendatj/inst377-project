@@ -8,7 +8,6 @@ const Order = () =>{
 
   const [data, useData] = useState([]);
   
-  
   useEffect(() => {    
     const getData = async () => {
       const response = await fetch('/api/hours');
@@ -26,7 +25,7 @@ const Order = () =>{
         {
           data?.length > 0 && data?.map((item) => (
             <div key={item.hall_id}>
-              <img src={'path/to/img'} alt={item.hall_name + ' image'}/>
+              {/* <img src={'path/to/img'} alt={item.hall_name + ' image'}/> */}
               <h2>{item.hall_name}</h2>
               <p>{              
                 String(item.hours).substring(1, String(item.hours).length - 1)              
