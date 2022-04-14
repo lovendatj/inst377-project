@@ -21,11 +21,11 @@ ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path='/' element={<App />} />
-      <Route path='order' element={<SecondPage />} />
-      <Route path="order/:id" element={<MenuPage />} />
-      <Route path='signin' element={<Signin />} />
-      <Route path='signup' element={<Signup />} />
-      <Route path='404' element={<NotFound/>} />
+      <Route path='/order' element={<SecondPage />} />
+      <Route path="/order/:id" element={<MenuPage />} />
+      <Route path='/signin' element={<Signin />} />
+      <Route path='/signup' element={<Signup />} />
+      <Route path='/404' element={<NotFound/>} />
       <Route path='*' element={<NotFound/>} />
     </Routes>
   </BrowserRouter>,
