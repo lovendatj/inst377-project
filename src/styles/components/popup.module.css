@@ -1,0 +1,55 @@
+.popup {
+    position:absolute;
+
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.popupContent {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 0 5px #ccc;
+    position: relative;
+    width: 300px;
+    height: 150px;
+    
+    padding: 10px;
+
+    display: inline-flex;
+    flex-direction: column;
+    align-content: center;
+    justify-items: center;
+
+}
+
+.popupContent h1 {
+    width: 80%;
+    margin-left: 10px;
+    align-self: center;
+    font-size: 1.5em;
+}
+
+.popupContent p {
+    width: 80%;
+    margin-left: 10px;
+    align-self: center;
+    font-size: 1em;
+}
+
+.buttonWrapper{
+    align-self: center;
+    display: inline-flex;
+    flex-direction: row;
+    width: 80%;
+    justify-content: space-between;
+}
+.buttonWrapper :first-child{
+    margin-left: 10px;
+    float: left;
+}
+.buttonWrapper :last-child{
+    margin-right: 10px;
+    float: right;
+}

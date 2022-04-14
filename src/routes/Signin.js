@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+
+import Footer from '../library/components/anchorPanels/footer.reg.js';
+import NavSmall from '../library/components/anchorPanels/nav.small.js';
+
+import { setWithExpire } from '../library/utils/localStorage.expire.js';
 
 // a signin form
 const Signin = () => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-
-    
-    useEffect(() => {
-        const user = localStorage.getItem('user');
-        if (user) {
-            window.location.href = '/order';
-        }
-    }, []);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -38,8 +35,8 @@ const Signin = () => {
                 const data = await response.json();
                 if (data.error) {
                     setError(data.error);
-                } else {                    
-                    localStorage.setItem('user', data.user);
+                } else {            
+                    setWithExpire('user', data.user, (1 * 15 * 60 * 1000));
                     window.location.href = '/order';
                 }
             } catch (e) {
@@ -51,6 +48,7 @@ const Signin = () => {
 
     return (
         <div>
+            < NavSmall />
             <h1>Sign In</h1>
             <form onSubmit={onSubmit}>
                 <label htmlFor="username">username</label>
@@ -70,9 +68,10 @@ const Signin = () => {
                 <button type="submit">Sign In</button>
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <p>Don't have an account? 
+            <p>Don't have an account?{' '}
                 <Link to={'/signup'}>Click here to signup</Link>
             </p>
+            < Footer />
         </div>
     );
                 

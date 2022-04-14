@@ -1,41 +1,84 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import NavSmall from "../library/components/anchorPanels/nav.small.js";
+import Footer from "../library/components/anchorPanels/footer.reg.js";
+import { DiningCard } from "../library/components/panels/card.layout.js";
+import PopUp from "../library/components/panels/popup.js";
 
-import NavSmall from '../library/components/anchorPanels/nav.small.js';
-import Footer from '../library/components/anchorPanels/footer.reg.js';
+import { getWithExpire } from "../library/utils/localStorage.expire.js";
 
-const Order = () =>{
+import style from "../styles/pages/order.module.css";
 
-  const [data, useData] = useState([]);
-  
-  useEffect(() => {    
-    const getData = async () => {
-      const response = await fetch('/api/hours');
-      const body = await response.json();
-      useData(body.results);
-    };
-    getData();
-    }, []);
-  
+const Order = () => {
+  const [user, setUser] = useState();
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isPopUpOpen, setPopUpOpen] = useState(false);
+
+  const [data, setData] = useState(null);
+
+  const getDiners = async () => {
+    const response = await fetch("/api/hours", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    try {
+      const data = await response.json();
+      setData(data.results);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const loginPopup = () => {
+    return (
+      <PopUp 
+        title={"Login"} 
+        message={"Please login to continue..."} 
+        callback={() => setPopUpOpen(false)}
+        redirect={"/signin"}
+        />);
+  };
+  const checkUser = () => {
+    const user_temp = getWithExpire("user");
+    if (user_temp != null) {
+      setUser(user_temp);
+      setLoggedIn(true);
+    } else {
+      setUser(null);
+      setLoggedIn(false);
+    }
+  };
+
+  useEffect(() => {
+    checkUser();
+    getDiners();
+  }, []);
 
   return (
-      <div>
-        < NavSmall />
+    <div>
+      <NavSmall isLoggedIn={isLoggedIn}/>
+      {isPopUpOpen && loginPopup()}
+      <div
+        className="diner-container"
+        onClick={() => {
+          isLoggedIn ? setPopUpOpen(false) : setPopUpOpen(true);
+        }}
+      >
         <h1>Select a location to get started...</h1>
-        {
-          data?.length > 0 && data?.map((item) => (
-            <div key={item.hall_id}>
-              {/* <img src={'path/to/img'} alt={item.hall_name + ' image'}/> */}
-              <h2>{item.hall_name}</h2>
-              <p>{              
-                String(item.hours).substring(1, String(item.hours).length - 1)              
-              }</p>
-            </div>
-          )) 
-        }
-        < Footer />
+        {data?.length > 0 &&
+          data?.map((item) => 
+            <DiningCard key={item?.hall_id} data={item} clickFunc={
+              () => {
+                if (!isPopUpOpen && isLoggedIn) {
+                  window.location.href = `/order/${item?.hall_id}`;
+                }
+            }} />
+          )}
       </div>
+      <Footer />
+    </div>
   );
-}
+};
 
 export default Order;

@@ -1,5 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import Footer from '../library/components/anchorPanels/footer.reg.js';
+import NavSmall from '../library/components/anchorPanels/nav.small.js';
+
+import { setWithExpire } from '../library/utils/localStorage.expire.js';
 
 // a signin form
 const Signin = () => {
@@ -31,8 +36,7 @@ const Signin = () => {
                 if (data.error) {
                     setError(data.error);
                 } else {
-                    console.log(data.user);
-                    localStorage.setItem('user', data.user);
+                    setWithExpire('user', data.user, (1 * 15 * 60 * 1000));
                     window.location.href = '/order';
                 }
             }catch (e) {
@@ -44,7 +48,8 @@ const Signin = () => {
 
     return (
         <div>
-            <h1>Create an Account</h1>
+            < NavSmall />
+            <h1>Sign Up</h1>
             <form onSubmit={onSubmit}>
                 <label htmlFor="username">username</label>
                 <input
@@ -63,9 +68,10 @@ const Signin = () => {
                 <button type="submit">Sign Up</button>
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}            
-            <p>Already have an account? 
-                <Link to={'/signin'}>Click here to signin</Link>
+            <p>Already have an account? {' '}
+                <Link to={'/signin'}> Click here to signin</Link>
             </p>
+            < Footer />
         </div>
     );
                 

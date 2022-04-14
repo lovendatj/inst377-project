@@ -65,6 +65,17 @@
   text-decoration: none;
 }
 
+.bottomNavBanner button {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.0);
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 .bottomNavImage{
   position: relative;
   width: 100%;

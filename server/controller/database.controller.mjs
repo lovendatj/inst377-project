@@ -26,8 +26,29 @@ const getAllTables = async (req, res, next) => {
         });
     }
 }
+// Remove once deployed, for testing purposes
+const dropAll = async (req, res, next) => {
+    try{
+        let result = await query(
+            sql._remove_users
+            ,[]
+        )
+        res.status(200).json(result);
+    }
+    catch(err){
+        res.status(500).json({
+            error: err
+        });
+    }
+}
 
-const validateUser = async (req, res, next) => {
+const validateUser = async (req, res, next) => {    
+    if (req.body.username === undefined || req.body.password === undefined){
+        res.status(400).json({
+            error: 'Bad Request'
+        });
+        return;
+    }
     try{
         let result = await query(
             sql.validateUser
@@ -70,58 +91,42 @@ const createNewUser = async (req, res, next) => {
 
 const getMenuAtHall = async (req, res, next) => {
     try{
+        let result = null;
         if(req.params.hall_id !== undefined){
-            let result = await query(
+            result = await query(
                 sql.getMenuAtHall
                 ,[String(req.params.hall_id)] 
             )
             res.status(200).json(result);
-            return;
+        } else {
+            result = await query(
+                sql.getAllMenu
+                ,[]
+            )
         }
-        let result = await query(
-            sql.getAllMenu
-            ,[]
-        )
         res.status(200).json(result);
+        return;
     }
     catch(err){
         res.status(500).json({
             error: err
         });
+        return;
     }
 }
-
-const dropAll = async (req, res, next) => {
-    try{
-        let result = await query(
-            sql._remove_users
-            ,[]
-        )
-        res.status(200).json(result);
-    }
-    catch(err){
-        res.status(500).json({
-            error: err
-        });
-    }
-}
-
-
 
 // Returns Hours of a Given Dining Hall for a Given Day
 // No day parameter returns all hours for all dining halls
 // Improper day parameter returns hours for current day
 // GET /api/hours/:day
+
+let dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 const getDayDiningHallHours = async (req, res, next) => {
-    let dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    dayNames = dayNames.map(day => day.toLowerCase());
     let day = req.params.day;
-    if (day === undefined || day.toLowerCase() && dayNames.includes(day.toLowerCase()) === false){
+    if (day === undefined || 
+        dayNames.includes(day.toLowerCase()) === false){
         day = (new Date().toLocaleString('en-us', {weekday:'long'})).toLowerCase();
-    }
-    else {
-        day = req.params.day.toLowerCase();
-    }
+    } 
     try{
         let result = await query(
             sql.getDayDiningHallHours
@@ -130,10 +135,12 @@ const getDayDiningHallHours = async (req, res, next) => {
         res.status(200).json({
             results: result
         });
+        return;
     }
     catch(err){
         console.log(err);
         res.status(500).json(err);
+        return;
     }
 }
 // export modules
