@@ -97,14 +97,24 @@ const getMenuAtHall = async (req, res, next) => {
                 sql.getMenuAtHall
                 ,[String(req.params.hall_id)] 
             )
-            res.status(200).json(result);
+            if (result.length === 0){
+                res.status(404).json({
+                    error: 'No menu found'
+                });
+                return;
+            }
+            res.status(200).json({
+                results: result
+            });
         } else {
             result = await query(
                 sql.getAllMenu
                 ,[]
             )
+            res.status(200).json({
+                results: result
+            });
         }
-        res.status(200).json(result);
         return;
     }
     catch(err){
