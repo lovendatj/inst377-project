@@ -25,7 +25,7 @@ apiRoutes.get('/meals', getMenuAtHall)
 apiRoutes.post('/signin', validateUser);
 apiRoutes.post('/signup', createNewUser, validateUser);
 
-apiRoutes.get('/dropall', dropAll);
+apiRoutes.delete('/dropall', dropAll);
 
 // apiRoutes.get('/all', getAllTables)
 // apiRoutes.get('/all/:table', getAllTables)

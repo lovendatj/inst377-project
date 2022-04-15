@@ -34,12 +34,13 @@ const Order = () => {
 
   const loginPopup = () => {
     return (
-      <PopUp 
-        title={"Login"} 
-        message={"Please login to continue..."} 
+      <PopUp
+        title={"Login"}
+        message={"Please login to continue..."}
         callback={() => setPopUpOpen(false)}
         redirect={"/signin"}
-        />);
+      />
+    );
   };
   const checkUser = () => {
     const user_temp = getWithExpire("user");
@@ -59,24 +60,29 @@ const Order = () => {
 
   return (
     <div>
-      <NavSmall isLoggedIn={isLoggedIn}/>
+      <NavSmall isLoggedIn={isLoggedIn} />
       {isPopUpOpen && loginPopup()}
       <div
-        className="diner-container"
+        className={style.dinerContainer}
         onClick={() => {
           isLoggedIn ? setPopUpOpen(false) : setPopUpOpen(true);
         }}
       >
         <h1>Select a location to get started...</h1>
-        {data?.length > 0 &&
-          data?.map((item) => 
-            <DiningCard key={item?.hall_id} data={item} clickFunc={
-              () => {
-                if (!isPopUpOpen && isLoggedIn) {
-                  navigate(`/order/${item?.hall_id}`);
-                }
-            }} />
-          )}
+        <div className={style.dinerList}>
+          {data?.length > 0 &&
+            data?.map((item) => (
+              <DiningCard
+                key={item?.hall_id}
+                data={item}
+                clickFunc={() => {
+                  if (!isPopUpOpen && isLoggedIn) {
+                    navigate(`/order/${item?.hall_id}`);
+                  }
+                }}
+              />
+            ))}
+        </div>
       </div>
       <Footer />
     </div>

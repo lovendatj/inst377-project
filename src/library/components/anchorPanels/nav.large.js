@@ -6,6 +6,7 @@ import PageLogo from "../logos/page.logo.js";
 
 import style from "../../../styles/components/nav.module.css";
 import { navbar } from "../../../styles/_colors.js";
+import image from '../../../images/filler/landing-page-image.jpg';
 
 import {
   setWithExpire,
@@ -88,7 +89,7 @@ const NavLarge = (props) => {
         }}
       >
         <img
-          src="https://cdn.zenfolio.com/cdn2/pub/dskamanzybnr/0/null/m/crf9xmdsfqrpcaqzckay/s/v-10/p1054483414-4.jpg?ts=2YH&tk=zPu3ZzF0sU4Fv7suYiNsP2Tt15MKalnKAiSzGcVJMfM=&v=2&visitor=df4Im6gQuA7CgJmp2cm566xGrho0fCGxepm01dC8hG5x&auth=exp=1649980799~acl=%2Fcdn2%2Fpub%2Fdskamanzybnr%2F%2A~hmac=a79df8fbadc6d98e195ee2fe0cb110c5"
+          src={image}
           alt="Landing Page Image"
         />
         <div className={style.overlay}></div>
