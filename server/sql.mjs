@@ -48,7 +48,32 @@ export const sql = {
                     hall_hours hh
                     JOIN hall_schedule hs ON hh.schedule_id = hs.schedule_id
             ) cte ON dh.hall_id = cte.hall_id;`,
-    _create_user:
+    _create_table_order:
+    `
+    CREATE TABLE orders (
+        order_id INT NOT NULL AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        token TEXT NOT NULL,
+        hall_id INT NOT NULL,
+        time_stamp TEXT NOT NULL,
+        items TEXT NOT NULL,
+        PRIMARY KEY (order_id)        
+    );
+    `,
+    createOrder: 
+    `
+        INSERT INTO orders (user_id, token, hall_id, time_stamp, items)
+        VALUES (?, ?, ?, ?, ?);
+    `,
+    getOrder:
+    `
+        SELECT * FROM orders WHERE order_id = ? AND user_id = ? AND token = ?;
+    `,
+    _remove_orders:
+    `
+        DELETE FROM orders;
+    `,
+    _table_create_user:
     `
     CREATE TABLE users (
         user_id INT NOT NULL AUTO_INCREMENT,
@@ -99,6 +124,10 @@ export const sql = {
         WHERE user_name = ? AND token = ?
     )
     `,
+    deleteOrder:
+    `
+    DELETE FROM orders WHERE order_id = ? AND user_id = ? AND token = ?;
+    `,
     getAllFromTable:
     `SELECT * FROM ??;`,
     getDayDiningHallHours:
@@ -106,7 +135,9 @@ export const sql = {
     getAllMenu:
     `SELECT * FROM vmeal_info;`,
     getMenuAtHall:
-    `SELECT * FROM vmeal_info WHERE hall_id = ?;`,
+    `SELECT * FROM vmeal_info WHERE hall_id = ? AND meal_category = ?;`,
     getHallInfo:
     `SELECT * FROM vdining_hall_info WHERE hall_id = ?;`,
+    getHallInfoDay:
+    `SELECT * FROM vdining_hall_info WHERE hall_id = ? AND day = ?;`,
 }

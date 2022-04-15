@@ -1,92 +1,119 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getWithExpire, setWithoutExpire } from "../library/utils/localStorage.control.js";
 
-import NavSmall from "../library/components/anchorPanels/nav.small.js";
-import Footer from "../library/components/anchorPanels/footer.reg.js";
-import { DiningCard } from "../library/components/panels/card.layout.js";
-import PopUp from "../library/components/panels/popup.js";
-import { getWithExpire } from "../library/utils/localStorage.expire.js";
-
-import style from "../styles/pages/order.module.css";
 
 const Order = () => {
-  const [user, setUser] = useState();
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [isPopUpOpen, setPopUpOpen] = useState(false);
-  const [data, setData] = useState(null);
 
-  const navigate = useNavigate();
+    const params = useParams([]);
+    const navigate = useNavigate();
 
-  const getDiners = async () => {
-    const response = await fetch("/api/hours", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    try {
-      const data = await response.json();
-      setData(data.results);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    const [orderId, setOrderId ] = useState();
+    const [user, setUser] = useState();
+    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [orderInfo, setOrderInfo] = useState();
 
-  const loginPopup = () => {
+    const getOrder = async () => {
+        console.log({
+            "user_id": user.user_id,
+            "token": user.token,
+            "order_id": orderId,
+        })
+        const response = await fetch(`/api/order/${orderId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "user_id": user.user_id,
+                "token": user.token,
+                "order_id": orderId,
+            })
+        });
+        try {
+            const data = await response.json();
+            if (response.status !== 200) {
+                throw Error("No order found");
+            }
+            setOrderInfo(data.results);
+        } catch (e) {
+            console.log(e);
+            navigate('/404');
+        }
+    };
+
+    const checkUser = () => {
+        const user_temp = getWithExpire("user");
+        if (user_temp != null) {
+            setUser(user_temp);
+            setLoggedIn(true);
+        } else {
+            setUser(null);
+            setLoggedIn(false);
+        }
+    };
+
+    const cancelOrder = async (e) => {
+        e.preventDefault();
+        const response = await fetch(`/api/order/${orderId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "user_id": user.user_id,
+                "token": user.token,
+                "order_id": orderId,
+            })
+        });
+        try {
+            const data = await response.json();
+            if (response.status !== 200) {
+                throw Error("No order found");
+            }
+            navigate('/');
+        } catch (e) {
+            console.log(e);
+            navigate('/');
+        }
+    };
+
+
+    
+    useEffect(() => {
+        checkUser();
+    }, []);
+    
+    useEffect(() => {
+        setOrderId(params.id);
+    }, [user]);
+
+    useEffect(() => {
+        if (user && orderId) {
+            getOrder();
+        }
+    }, [orderId]);
+
+
+
+
     return (
-      <PopUp
-        title={"Login"}
-        message={"Please login to continue."}
-        callback={() => setPopUpOpen(false)}
-        redirect={"/signin"}
-      />
-    );
-  };
-  const checkUser = () => {
-    const user_temp = getWithExpire("user");
-    if (user_temp != null) {
-      setUser(user_temp);
-      setLoggedIn(true);
-    } else {
-      setUser(null);
-      setLoggedIn(false);
-    }
-  };
-
-  useEffect(() => {
-    checkUser();
-    getDiners();
-  }, []);
-
-  return (
-    <div>
-      <NavSmall isLoggedIn={isLoggedIn} />
-      {isPopUpOpen && loginPopup()}
-      <div
-        className={style.dinerContainer}
-        onClick={() => {
-          isLoggedIn ? setPopUpOpen(false) : setPopUpOpen(true);
-        }}
-      >
-        <h1>Select a location to get started...</h1>
-        <div className={style.dinerList}>
-          {data?.length > 0 &&
-            data?.map((item) => (
-              <DiningCard
-                key={item?.hall_id}
-                data={item}
-                clickFunc={() => {
-                  if (!isPopUpOpen && isLoggedIn) {
-                    navigate(`/order/${item?.hall_id}`);
-                  }
-                }}
-              />
-            ))}
+        <div>
+            {
+                orderInfo &&
+                <div>
+                    <h1>Success!</h1>
+                    <p>Your order will be ready in 5 minutes. Head to {orderInfo.hall_name} to pick up your food.</p>
+                    <p>
+                        <a target="_blank" href={`https://www.google.com/maps/@${orderInfo.hall_lat},${orderInfo.hall_long},25.00z`}>
+                            Directions
+                        </a>
+                    </p>
+                    <button onClick={cancelOrder}>Cancel Order</button>
+                </div>                    
+            }
         </div>
-      </div>
-      <Footer />
-    </div>
-  );
+    );
 };
 
 export default Order;

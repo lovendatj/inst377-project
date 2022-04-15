@@ -14,6 +14,20 @@ export const setWithExpire = (key, value, expire) => {
     }
 }
 
+export const setWithoutExpire = (key, value) => {
+    if (value === null) {
+        try{
+            localStorage.removeItem(key);
+        } catch (e) {
+            console.log(e);
+        }
+    } else {
+        localStorage.setItem(key, JSON.stringify({
+            value   
+        }));
+    }
+}
+
 export const getWithExpire = (key, callback) => {
     const data = localStorage.getItem(key);
     if (data != null) {

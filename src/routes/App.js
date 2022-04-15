@@ -4,7 +4,7 @@ import Footer from "../library/components/anchorPanels/footer.reg.js";
 import ImageDescriptionLarge from "../library/components/panels/image.description.large.js";
 import NavLarge from "../library/components/anchorPanels/nav.large.js";
 
-import { getWithExpire } from "../library/utils/localStorage.expire.js";
+import { getWithExpire } from "../library/utils/localStorage.control.js";
 
 import style from "../styles/pages/app.module.css";
 import { standard } from "../styles/_colors.js";

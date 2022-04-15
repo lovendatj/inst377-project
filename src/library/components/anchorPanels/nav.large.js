@@ -11,7 +11,7 @@ import image from '../../../images/filler/landing-page-image.jpg';
 import {
   setWithExpire,
   getWithExpire,
-} from "../../utils/localStorage.expire.js";
+} from "../../utils/localStorage.control.js";
 
 const NavLarge = (props) => {
   const [isLoggedIn, setLoggedIn] = useState(props.isLoggedIn);

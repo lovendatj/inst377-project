@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../library/components/anchorPanels/footer.reg.js';
 import NavSmall from '../library/components/anchorPanels/nav.small.js';
 
-import { setWithExpire } from '../library/utils/localStorage.expire.js';
+import { setWithoutExpire } from '../library/utils/localStorage.control.js';
 
 import style from '../styles/components/form.module.css'
 
@@ -39,8 +39,8 @@ const Signin = ( props ) => {
                 if (data.error) {
                     setError(data.error);
                 } else {
-                    setWithExpire('user', data.user, (1 * 15 * 60 * 1000));
-                    navigate('/order');
+                    setWithoutExpire('user', data.user);
+                    navigate('/menus');
                 }
             }catch (e) {
                 console.log(e);

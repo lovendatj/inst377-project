@@ -4,7 +4,7 @@ export const paths = [
         name: 'Home',
     },
     {   
-        path: '/order',
-        name: 'Order',
+        path: '/menus',
+        name: 'Menus',
     },
 ];

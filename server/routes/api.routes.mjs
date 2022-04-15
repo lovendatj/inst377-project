@@ -5,7 +5,10 @@ import {
     getDayDiningHallHours,
     validateUser,
     dropAll,
-    createNewUser
+    createNewUser,
+    getOrder,
+    createOrder,
+    deleteOrder
 } from '../controller/database.controller.mjs';
 
 const apiRoutes = express.Router();
@@ -28,7 +31,20 @@ apiRoutes.post('/signup', createNewUser, validateUser);
 
 apiRoutes.get('/hall/:id', getHall);
 
+apiRoutes.post('/order', createOrder)
+    .post('/order/:id', getOrder);
+
+apiRoutes.delete('/order/:id', deleteOrder);
+
 apiRoutes.delete('/dropall', dropAll);
+
+// Create a default not found route
+apiRoutes.get('*', (req, res) => {
+    res.status(404).json({
+        error: 'Not Found',
+    });
+});
+
 
 // apiRoutes.get('/all', getAllTables)
 // apiRoutes.get('/all/:table', getAllTables)

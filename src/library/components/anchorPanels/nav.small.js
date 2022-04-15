@@ -10,7 +10,7 @@ import { navbar } from "../../../styles/_colors.js";
 import {
   setWithExpire,
   getWithExpire,
-} from "../../utils/localStorage.expire.js";
+} from "../../utils/localStorage.control.js";
 
 const NavSmall = (props) => {
   const [isLoggedIn, setLoggedIn] = useState(props.isLoggedIn);
