@@ -18,7 +18,9 @@ const getAllTables = async (req, res, next) => {
             )
         }
 
-        res.status(200).json(result);
+        res.status(200).json({
+            results: result
+        });
     }
     catch(err){
         res.status(500).json({
@@ -125,6 +127,30 @@ const getMenuAtHall = async (req, res, next) => {
     }
 }
 
+const getHall = async (req, res, next) => {
+    try{
+        if (req.params.id === undefined){
+            res.status(400).json({
+                error: 'Bad Request'
+            });
+            return;
+        }
+        let result = await query(
+            sql.getHallInfo
+            ,[req.params.id]
+        );
+        res.status(200).json({
+            results: result
+        });
+        return;
+    } catch (err){
+        res.status(500).json({
+            error: err
+        });
+        return;
+    }
+}
+
 // Returns Hours of a Given Dining Hall for a Given Day
 // No day parameter returns all hours for all dining halls
 // Improper day parameter returns hours for current day
@@ -146,10 +172,10 @@ const getDayDiningHallHours = async (req, res, next) => {
             results: result
         });
         return;
-    }
-    catch(err){
-        console.log(err);
-        res.status(500).json(err);
+    } catch(err){
+        res.status(500).json({
+            error: err
+        });
         return;
     }
 }
@@ -157,6 +183,7 @@ const getDayDiningHallHours = async (req, res, next) => {
 export {
     getDayDiningHallHours,
     getMenuAtHall,
+    getHall,
     validateUser,
     createNewUser,
     getAllTables,

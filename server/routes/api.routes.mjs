@@ -1,6 +1,7 @@
 import express from 'express';
 import {
     getMenuAtHall,
+    getHall,
     getDayDiningHallHours,
     validateUser,
     dropAll,
@@ -24,6 +25,8 @@ apiRoutes.get('/meals', getMenuAtHall)
 
 apiRoutes.post('/signin', validateUser);
 apiRoutes.post('/signup', createNewUser, validateUser);
+
+apiRoutes.get('/hall/:id', getHall);
 
 apiRoutes.delete('/dropall', dropAll);
 

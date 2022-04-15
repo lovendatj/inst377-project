@@ -2,7 +2,7 @@
     position:absolute;
 
     left: 50%;
-    top: 50%;
+    top: 40%;
     transform: translate(-50%, -50%);
 
     z-index: 100;
@@ -15,7 +15,7 @@
     box-shadow: 0 0 5px #ccc;
     position: relative;
     width: 300px;
-    height: 150px;
+    height: 200px;
     
     padding: 10px;
 
@@ -44,7 +44,7 @@
     align-self: center;
     display: inline-flex;
     flex-direction: row;
-    width: 80%;
+    width: 100%;
     justify-content: space-between;
 }
 .buttonWrapper :first-child{
@@ -54,4 +54,12 @@
 .buttonWrapper :last-child{
     margin-right: 10px;
     float: right;
+}
+
+.popupContent button{
+    width: 30%;
+    max-width: 100px;
+    margin: 40px 20px 0 10px;
+    align-self: center;
+    font-size: 1em;
 }

@@ -6,7 +6,9 @@ import NavSmall from '../library/components/anchorPanels/nav.small.js';
 
 import { setWithExpire } from '../library/utils/localStorage.expire.js';
 
-// a signin form
+import style from '../styles/components/form.module.css'
+
+
 const Signin = ( props ) => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -51,28 +53,38 @@ const Signin = ( props ) => {
     return (
         <div>
             < NavSmall />
-            <h1>Sign In</h1>
-            <form onSubmit={onSubmit}>
-                <label htmlFor="username">username</label>
-                <input
-                    type="text"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUserName(e.target.value)}
-                />
-                <label htmlFor="password">password</label>
-                <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Sign In</button>
-            </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <p>Don't have an account?{' '}
-                <Link to={'/signup'}>Click here to signup</Link>
-            </p>
+            <div className={style.formWrapper}>                
+                <form onSubmit={onSubmit}>
+                    <h1 id="title">Sign In</h1>
+                    <div className={style.formGroup}>
+                        <label htmlFor="username">username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            value={username}
+                            placeholder="Enter Username..."
+                            onChange={(e) => setUserName(e.target.value)}
+                        />
+                    </div>
+                    <div className={style.formGroup}>
+                        <label htmlFor="password">password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            placeholder="Enter Password..."
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    {error && <p className={style.error} style={{ color: 'red' }}>{error}</p>}
+                    
+                    <button type="submit">Sign In</button>
+                
+                    <p>Don't have an account?</p>
+                    <Link to={'/signup'}>Click here to signup</Link>
+                    
+                </form>
+            </div>
             < Footer />
         </div>
     );

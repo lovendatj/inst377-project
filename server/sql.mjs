@@ -107,6 +107,6 @@ export const sql = {
     `SELECT * FROM vmeal_info;`,
     getMenuAtHall:
     `SELECT * FROM vmeal_info WHERE hall_id = ?;`,
-    
-
+    getHallInfo:
+    `SELECT * FROM vdining_hall_info WHERE hall_id = ?;`,
 }

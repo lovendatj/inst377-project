@@ -36,7 +36,7 @@ const Order = () => {
     return (
       <PopUp
         title={"Login"}
-        message={"Please login to continue..."}
+        message={"Please login to continue."}
         callback={() => setPopUpOpen(false)}
         redirect={"/signin"}
       />
