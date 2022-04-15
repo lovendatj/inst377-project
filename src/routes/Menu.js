@@ -25,7 +25,8 @@ const MenuPage = () => {
             }
             setMenu(data.results);
         } catch (e) {
-            <Redirect to="/404"/>
+            window.location.href = "/404";
+            console.log(e);
         }
     };
     const checkUser = () => {
