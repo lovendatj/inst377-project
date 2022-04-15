@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import style from '../../../styles/components/popup.module.css';
 
 const PopUp = (props) => {
     const { title, message, callback, redirect } = props;
-
+    const navigate = useNavigate();
     
     const [isShown, setShown] = useState(true);
 
@@ -17,7 +18,7 @@ const PopUp = (props) => {
         setShown(false);
         await callback();
         if(redirect) {
-            window.location.href = redirect;
+            navigate(redirect);
         }
     };
     
