@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import NavSmall from "../library/components/anchorPanels/nav.small.js";
 import Footer from "../library/components/anchorPanels/footer.reg.js";
 import { DiningCard } from "../library/components/panels/card.layout.js";
 import PopUp from "../library/components/panels/popup.js";
-
 import { getWithExpire } from "../library/utils/localStorage.expire.js";
 
 import style from "../styles/pages/order.module.css";
@@ -12,8 +13,9 @@ const Order = () => {
   const [user, setUser] = useState();
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isPopUpOpen, setPopUpOpen] = useState(false);
-
   const [data, setData] = useState(null);
+
+  const navigate = useNavigate();
 
   const getDiners = async () => {
     const response = await fetch("/api/hours", {
@@ -71,7 +73,7 @@ const Order = () => {
             <DiningCard key={item?.hall_id} data={item} clickFunc={
               () => {
                 if (!isPopUpOpen && isLoggedIn) {
-                  window.location.href = `/order/${item?.hall_id}`;
+                  navigate(`/order/${item?.hall_id}`);
                 }
             }} />
           )}

@@ -25,7 +25,7 @@ const MenuPage = () => {
             }
             setMenu(data.results);
         } catch (e) {
-            window.location.href = "/404";
+            props.history.push('/404');
             console.log(e);
         }
     };

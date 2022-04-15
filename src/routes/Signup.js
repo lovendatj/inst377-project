@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Footer from '../library/components/anchorPanels/footer.reg.js';
 import NavSmall from '../library/components/anchorPanels/nav.small.js';
@@ -7,10 +7,12 @@ import NavSmall from '../library/components/anchorPanels/nav.small.js';
 import { setWithExpire } from '../library/utils/localStorage.expire.js';
 
 // a signin form
-const Signin = () => {
+const Signin = ( props ) => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -37,7 +39,7 @@ const Signin = () => {
                     setError(data.error);
                 } else {
                     setWithExpire('user', data.user, (1 * 15 * 60 * 1000));
-                    window.location.href = '/order';
+                    navigate('/order');
                 }
             }catch (e) {
                 console.log(e);
