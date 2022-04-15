@@ -1,8 +1,11 @@
 import React, { useEffect, useState} from 'react';
-import { Link, useParams, Route } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import NavSmall from "../library/components/anchorPanels/nav.small.js";
 import Footer from "../library/components/anchorPanels/footer.reg.js";
 import { getWithExpire } from "../library/utils/localStorage.expire.js";
+
+// https://stackoverflow.com/questions/52253003/how-to-redirect-one-page-to-another-page-in-reactjs
 
 const MenuPage = () => {
     const params = useParams([]);
@@ -22,7 +25,7 @@ const MenuPage = () => {
             }
             setMenu(data.results);
         } catch (e) {
-            window.location.href = "/404";
+            <Redirect to="/404"/>
         }
     };
     const checkUser = () => {
