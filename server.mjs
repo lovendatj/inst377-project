@@ -1,17 +1,21 @@
 /* eslint-disable no-console */
-import express from 'express';
-import apiRoutes from './server/routes/api.routes.mjs';
+import express from "express";
+import apiRoutes from "./server/routes/api.routes.mjs";
 
 const app = express();
 
 const PORT = process.env.PORT || 3030;
-const staticFolder = 'build';
+const staticFolder = "build";
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static(staticFolder));
-app.use('/api', apiRoutes);
+app.use("/api", apiRoutes);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve("build", "index.html"));
+});
 
 async function bootServer() {
   try {
