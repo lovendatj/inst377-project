@@ -15,6 +15,7 @@ import {
 
 const NavLarge = (props) => {
   const [isLoggedIn, setLoggedIn] = useState(props.isLoggedIn);
+  const [orderInfo, setOrderInfo] = useState();
 
   const signOut = () => {
     setWithExpire("user", null);
@@ -29,6 +30,15 @@ const NavLarge = (props) => {
     } else {
       setLoggedIn(false);
     }
+    const order = getWithExpire("order");
+    if (order) {
+      setOrderInfo(order);
+      setTimeout(() => {
+        setWithExpire("order", null);
+        setOrderInfo(undefined);
+      }, (1000 * 60 * 15));
+
+    }
   }, []);
 
   return (
@@ -40,6 +50,13 @@ const NavLarge = (props) => {
           color: navbar.topBar.color,
         }}
       >
+      { orderInfo != undefined ? (
+        <div className={style.orderInfo}>
+          <Link to={`/order/success/${orderInfo.order_id}`}>
+            <p>Your order is about ready, click here to see more</p>
+          </Link>
+        </div>
+      ): null}
         <h3>INST377 Final Project</h3>
       </div>
       <div

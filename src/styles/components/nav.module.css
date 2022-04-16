@@ -16,6 +16,19 @@
   
   align-items: center;
 }
+.orderInfo {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  top: 0%;
+  background-color: rgb(180, 243, 195);
+  text-decoration: none;
+}
+.orderInfo p{
+  font-size: 15px;
+  color: green;
+  text-align: center;
+}
 
 .topNavBanner{  
   height: 50px;

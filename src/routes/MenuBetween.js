@@ -7,7 +7,7 @@ import { DiningCard } from "../library/components/panels/card.layout.js";
 import PopUp from "../library/components/panels/popup.js";
 import { getWithExpire } from "../library/utils/localStorage.control.js";
 
-import style from "../styles/pages/order.module.css";
+import style from "../styles/pages/menuBetween.module.css";
 
 const MenuBetween = () => {
   const [user, setUser] = useState();

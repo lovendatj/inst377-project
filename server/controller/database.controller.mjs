@@ -199,7 +199,6 @@ const getOrder = async (req, res, next) => {
             ...order_info[0],
             ...dining_hall_info[0]
         }
-        console.log(result)
         res.status(200).json({
             results: result
         });

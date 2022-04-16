@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getWithExpire, setWithoutExpire } from "../library/utils/localStorage.control.js";
+import NavSmall from "../library/components/anchorPanels/nav.small.js";
+import Footer from "../library/components/anchorPanels/footer.reg.js";
+import { getWithExpire, setWithExpire, setWithoutExpire } from "../library/utils/localStorage.control.js";
 
+import style from '../styles/pages/orders.module.css';
 
 const Order = () => {
 
@@ -35,6 +38,7 @@ const Order = () => {
             if (response.status !== 200) {
                 throw Error("No order found");
             }
+            setWithExpire("order", data.results, (1000 * 60 * 15));
             setOrderInfo(data.results);
         } catch (e) {
             console.log(e);
@@ -99,11 +103,12 @@ const Order = () => {
 
     return (
         <div>
+            <NavSmall isLoggedIn={isLoggedIn}/>
             {
                 orderInfo &&
-                <div>
+                <div className={style.success}>
                     <h1>Success!</h1>
-                    <p>Your order will be ready in 5 minutes. Head to {orderInfo.hall_name} to pick up your food.</p>
+                    <p>Your order will be ready in 5 minutes. <br/> Head to {orderInfo.hall_name} to pick up your food.</p>
                     <p>
                         <a target="_blank" href={`https://www.google.com/maps/@${orderInfo.hall_lat},${orderInfo.hall_long},25.00z`}>
                             Directions
@@ -112,6 +117,7 @@ const Order = () => {
                     <button onClick={cancelOrder}>Cancel Order</button>
                 </div>                    
             }
+            <Footer />
         </div>
     );
 };

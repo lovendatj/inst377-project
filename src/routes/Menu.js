@@ -1,9 +1,11 @@
 import React, { useEffect, useState} from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { Redirect } from 'react-router';
+
 import NavSmall from "../library/components/anchorPanels/nav.small.js";
 import Footer from "../library/components/anchorPanels/footer.reg.js";
 import { getWithExpire, setWithoutExpire } from "../library/utils/localStorage.control.js";
+
+import style from "../styles/pages/menu.module.css";
 
 // https://stackoverflow.com/questions/52253003/how-to-redirect-one-page-to-another-page-in-reactjs
 
@@ -15,9 +17,7 @@ const MenuPage = () => {
     
     const [menu, setMenu] = useState({});
     const [hall, setHall] = useState({});
-    const [order, setOrder] = useState(
-        getWithExpire("order")
-    );
+    
     const [items, setItems] = useState({});
 
     const getMenu = async () => {
@@ -144,53 +144,56 @@ const MenuPage = () => {
     return (
         <div>
             <NavSmall isLoggedIn={isLoggedIn}/>
-            <h1>Welcome to <br/> {hall.name}!</h1>
-            {
-                menu.length > 0 ?
-                    <form>
-                        <table>
-                            <thead>
-                                <tr>   
-                                    <th>Meal</th>
-                                    <th>Restrictions</th>
-                                    <th>Calories</th>
-                                    <th>Add</th>
-                                    <th>Remove</th>
-                                    <th>Quantity</th>
-                                </tr>
-                            </thead>
-                            <tbody>                            
-                                {                            
-                                    menu.map((meal, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{`${meal.meal_name}`}</td>
-                                                <td>{meal.restriction_type}</td>
-                                                <td>{meal.calories}</td>
-                                                <td>
-                                                    {<button type="button" onClick={() => addToOrder(meal.meal_id, meal.restriction_type)}>Add</button>}
-                                                </td>
-                                                <td>
-                                                    {<button type="button" onClick={() => removeFromOrder(meal.meal_id, meal.restriction_type)}>Remove</button>}
-                                                </td>
-                                                <td>
-                                                    {   items[`${meal.meal_id}-${meal.restriction_type}`] 
-                                                        ? items[`${meal.meal_id}-${meal.restriction_type}`] : 0}
-                                                </td>
-                                            </tr>
-                                        );
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                        
-                        <button type="button" onClick={
-                            createOrder
-                        }>Submit</button>
+            <div className={style.menuContainer}>
+                <h1>Welcome to {hall.name}!</h1>
+                {
+                    menu.length > 0 ?
+                        <form>
+                            <table>
+                                <thead>
+                                    <tr>   
+                                        <th>Meal</th>
+                                        <th>Restrictions</th>
+                                        <th>Calories</th>
+                                        <th>Add</th>
+                                        <th>Remove</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                            
+                                    {                            
+                                        menu.map((meal, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{`${meal.meal_name}`}</td>
+                                                    <td>{meal.restriction_type}</td>
+                                                    <td>{meal.calories}</td>
+                                                    <td>
+                                                        {<button className={style.add} type="button" onClick={() => addToOrder(meal.meal_id, meal.restriction_type)}>Add</button>}
+                                                    </td>
+                                                    <td>
+                                                        {<button className={style.sub} type="button" onClick={() => removeFromOrder(meal.meal_id, meal.restriction_type)}>Remove</button>}
+                                                    </td>
+                                                    <td>
+                                                        {   items[`${meal.meal_id}-${meal.restriction_type}`] 
+                                                            ? items[`${meal.meal_id}-${meal.restriction_type}`] : 0}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                            
+                            <button type="button" onClick={
+                                createOrder
+                            }>Submit</button>
 
-                    </form>
-                    : <p>Loading...</p>
-            }
+                        </form>
+                        : <p>Loading...</p>
+                }
+            </div>
+
             <Footer />
         </div>
     );
