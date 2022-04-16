@@ -45,7 +45,7 @@ const NavSmall = (props) => {
           color: navbar.topBar.color,
         }}
       >
-        { orderInfo != undefined ? (
+        { orderInfo != null ? (
           <div className={style.orderInfo}>
             <Link to={`/order/success/${orderInfo.order_id}`}>
               <p>Your order is about ready, click here to see more</p>
