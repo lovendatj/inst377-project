@@ -95,8 +95,19 @@ const MenuPage = () => {
         });
     };
 
+    const _numberOfItems = () => {
+        let amount = 0;
+        Object.keys(items).forEach(key => {
+            amount += items[key];
+        });
+        return amount;
+    }
     const createOrder = async(event) => {        
         event.preventDefault();
+        if (_numberOfItems() === 0) {
+            alert("No items selected");
+            return;
+        }
         const response = await fetch(`/api/order`, {
             method: "POST",
             headers: {

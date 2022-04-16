@@ -17,11 +17,6 @@ const Order = () => {
     const [orderInfo, setOrderInfo] = useState();
 
     const getOrder = async () => {
-        console.log({
-            "user_id": user.user_id,
-            "token": user.token,
-            "order_id": orderId,
-        })
         const response = await fetch(`/api/order/${orderId}`, {
             method: "POST",
             headers: {

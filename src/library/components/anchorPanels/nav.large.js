@@ -36,7 +36,7 @@ const NavLarge = (props) => {
       setTimeout(() => {
         setWithExpire("order", null);
         setOrderInfo(undefined);
-      }, (1000 * 60 * 15));
+      }, (1000 * 5));
 
     }
   }, []);
