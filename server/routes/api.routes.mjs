@@ -32,11 +32,10 @@ apiRoutes.post('/signup', createNewUser, validateUser);
 apiRoutes.get('/hall/:id', getHall);
 
 apiRoutes.post('/order', createOrder)
-    .post('/order/:id', getOrder);
+    .post('/order/:id', getOrder)
+    .delete('/order/:id', deleteOrder);
 
-apiRoutes.delete('/order/:id', deleteOrder);
-
-apiRoutes.delete('/dropall', dropAll);
+// apiRoutes.delete('/dropall', dropAll);
 
 // Create a default not found route
 apiRoutes.get('*', (req, res) => {

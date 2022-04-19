@@ -59,7 +59,7 @@ const MenuBetween = () => {
   }, []);
 
   return (
-    <div>
+    <div className={style.pageContainer}>
       <NavSmall isLoggedIn={isLoggedIn} />
       {isPopUpOpen && loginPopup()}
       <div
