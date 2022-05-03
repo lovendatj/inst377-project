@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.bb734d82.css",
+    "main.js": "/static/js/main.191a76d8.js",
+    "static/js/633.98c2f3da.chunk.js": "/static/js/633.98c2f3da.chunk.js",
+    "static/media/landing-page-image.jpg": "/static/media/landing-page-image.170184648a294f91c0e9.jpg",
+    "static/media/dining_hall.jpg": "/static/media/dining_hall.77aec2ef5dadedf43b28.jpg",
+    "index.html": "/index.html",
+    "main.bb734d82.css.map": "/static/css/main.bb734d82.css.map",
+    "main.191a76d8.js.map": "/static/js/main.191a76d8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bb734d82.css",
+    "static/js/main.191a76d8.js"
+  ]
+}
